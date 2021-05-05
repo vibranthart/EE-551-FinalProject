@@ -1,0 +1,30 @@
+Notes:
+
+you would have multiple users
+2 ways:
+
+    - have host share screen and audio
+
+    - synch websites -> one person submits the video link (Youtube) -> youtube opens on both users and synchs up, so when one pauses the othe rpuases at the same time
+
+-step 1: make client text -> test user interactions (done)(touch ups
+-step 2: make decisions -> 
+                    1: view video request 
+                    2: send a message 
+                    3: idk just in case we need'
+-step 3: opening the link 
+-step 4: synchcronized viewing -> Youtube
+
+-we could make a GUI
+-we add voice chat
+-one view for everyone
+
+Roles:
+-Hart Tecson - (Making decisions, how to pause and play a video through python)
+-Roni Sistoso - (Find Time Stamps)
+-Edward Gaskin - (Open links using Python)
+
+Meet Up Times:
+-Saturday: 5/8/21
+-
+-
