@@ -6,22 +6,26 @@ import pafy
 
 def StopVideoPlayback():
     media.stop()
+def StartVideoPlayback():
+    media.play()
 
+#url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+user_url = input("Please paste a url here: ")
 
-url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-video = pafy.new(url)
+video = pafy.new(user_url)
 
-best = video.streams[1]#gets index at 0
-#best = video.getbest() best quality start from beginning
+#best = video.streams[0]#gets index at 0
+best = video.getbest() #best quality start from beginning
 
 media = vlc.MediaPlayer(best.url)
 
-print("Video Playing...")
+print("Video Loaded!")
 
-# Starts video
-media.play()
+start_playback = input("Would you like to end playback? (Y/N)")
+if ((start_playback == 'Y') or (start_playback == 'y')):
+    StartVideoPlayback()
 
 
-stop = input("Would you like to end playback? (Y/N)")
-if ((stop == 'Y') or (stop == 'y')):
+stop_playback = input("Would you like to end playback? (Y/N)")
+if ((stop_playback == 'Y') or (stop_playback == 'y')):
     StopVideoPlayback()
