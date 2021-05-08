@@ -58,7 +58,7 @@ def recieve():
         print(f'Nickname of client is {nickname}')
         broadcast(f'{nickname} joined the chat'.encode('ascii'))
         client.send('[Success] : Connected to the server!'.encode('ascii'))
-        client.send('[Options] : #1 - Sync Video #2 - '.encode('ascii'))
+        #client.send('[Options] : #1 - Sync Video #2 - '.encode('ascii'))
 
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()

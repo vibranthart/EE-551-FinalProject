@@ -20,9 +20,21 @@ you would have multiple users
 -one view for everyone
 
 Roles:
+Week 1:
 -Hart Tecson - (Making decisions, how to pause and play a video through python)
 -Roni Sistoso - (Find Time Stamps)
 -Edward Gaskin - (Open links using Python)
+
+Week 2:
+Get close to done Sunday the 16th
+Big meeting Thursday
+-Hart Tecson - Voice chat, text GUI
+-Roni Sistoso - Server decision 
+-Edward Gaskin - video time stamps
+
+Challenges:
+
+
 
 Meet Up Times:
 -Saturday: 5/8/21
