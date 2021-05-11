@@ -22,9 +22,12 @@ class MediaLink:
             best = video.getbest()  # best quality start from beginning
             media = vlc.MediaPlayer(best.url)
             print("Video Loaded!")
-            # media.add_option(startPoint) how far in to star playing in seconds
-            # media.add_option(runTime) how long to run
-            # media.add_option(stopPoint) time to stop
+            # how far in to star playing in seconds
+            media.add_option(startPoint)
+            # how long to run
+            media.add_option(runTime)
+            # time to stop
+            media.add_option(stopPoint)
 
     def stopVideo(self):
         media.stop()
