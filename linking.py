@@ -4,15 +4,14 @@ import pafy
 import time
 
 # Function to call in other files using [some_variable = MediaLink(your_url)] [some_variable.startVideo, some_variable.stopVideo, some_variable.pauseVideo]
+# vlc MediaPlayer commands in vlc.py which is in path C:\Python39\Lib\site-packages
 
 
 class MediaLink:
 
-    def __init__(self, url, startPoint, runTime, stopPoint):
+    def __init__(self, url):
         self.url = url
-        self.startPoint = startPoint
-        self.stopPoint = stopPoint
-        self.runTime = runTime
+
         if len(url) < 23:
             print("Your URL is not valid!")
         else:
@@ -22,12 +21,6 @@ class MediaLink:
             best = video.getbest()  # best quality start from beginning
             media = vlc.MediaPlayer(best.url)
             print("Video Loaded!")
-            # how far in to star playing in seconds
-            media.add_option(startPoint)
-            # how long to run
-            media.add_option(runTime)
-            # time to stop
-            media.add_option(stopPoint)
 
     def stopVideo(self):
         media.stop()
@@ -37,3 +30,16 @@ class MediaLink:
 
     def pauseVideo(self):
         media.pause()
+
+    def getTime(self):
+        # Get current movie time of player in MILLISECONDS
+        media.get_time()
+
+    def getLength(self):
+        # Get length of video in ms
+        media.get_length()
+
+    def setTime(self, i_time):
+        # Set the movie time to desired in MILLISECONDS, here we can sync up instances from peoples players in
+        self.i_time = i_time
+        media.set_time(i_time)
