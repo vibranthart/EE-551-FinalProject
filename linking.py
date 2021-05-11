@@ -8,8 +8,11 @@ import time
 
 class MediaLink:
 
-    def __init__(self, url):
+    def __init__(self, url, startPoint, runTime, stopPoint):
         self.url = url
+        self.startPoint = startPoint
+        self.stopPoint = stopPoint
+        self.runTime = runTime
         if len(url) < 23:
             print("Your URL is not valid!")
         else:
@@ -19,6 +22,9 @@ class MediaLink:
             best = video.getbest()  # best quality start from beginning
             media = vlc.MediaPlayer(best.url)
             print("Video Loaded!")
+            # media.add_option(startPoint) how far in to star playing in seconds
+            # media.add_option(runTime) how long to run
+            # media.add_option(stopPoint) time to stop
 
     def stopVideo(self):
         media.stop()
