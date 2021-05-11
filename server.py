@@ -27,10 +27,25 @@ def handle(client):
             #print(message)
             #print(message.decode('ascii'))
            
-            if '#1' in message.decode('ascii'):
+            #Video Watch Linkage
+            if '#1 start' in message.decode('ascii'):
                 broadcast('Trying to Sync...'.encode('ascii'))
-            elif '#2' in message.decode('ascii'):
+            elif '#1 exit' in message.decode('ascii'):
+                broadcast('Trying to end program...'.encode('ascii'))
+                
+            #Share Audio
+            elif '#2 start' in message.decode('ascii'):
                 broadcast('Secondary option'.encode('ascii'))
+            elif '#2 exit' in message.decode('ascii'):
+                broadcast('Trying to end program...'.encode('ascii'))
+            
+            #Share Screen
+            elif '#3 start' in message.decode('ascii'):
+                broadcast('Third option'.encode('ascii'))
+            elif '#3 exit' in message.decode('ascii'):
+                broadcast('Trying to end program...'.encode('ascii'))
+                
+            #Share
             else:
                 broadcast(message)
         except:
