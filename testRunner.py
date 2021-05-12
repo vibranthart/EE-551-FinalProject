@@ -1,6 +1,8 @@
 from linking import *
 import time
 
+#MUST HAVE VLC MEDIA INSTALLED TO RUN
+
 url = input('enter url')
 
 movie1 = MediaLink(url)
