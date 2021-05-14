@@ -1,4 +1,11 @@
+from vidstream import AudioSender, AudioReceiver, ScreenShareClient, CameraClient, StreamingServer
 import tkinter as tk
+import socket
+import threading
+import requests
+
+from main2 import *
+
 # Requires pip install requests and pip install Pillow (Pillow should already be installed for the vidReceiver and vidSender)
 #The GUI operates similar to div's in JS, order determines parents and child. (root is base window, any other child can be defined
 #  such as videoFrame is a child of root and controlsDiv is a child of videoFrame)
@@ -38,6 +45,12 @@ def playHandler():
     #ADD call to play video playback
     print("PLAY CLICKED")
 
+''' 
+GUI
+
+
+'''
+
 
 root = tk.Tk()
 
@@ -52,7 +65,7 @@ canvas.pack()
 
 #Video Parent
 videoFrame = tk.Frame(root, bg='#a6a6a6')
-videoFrame.place(relx=0.1, rely=0.1, relwidth=0.45, relheight=0.45)
+videoFrame.place(relx=0.05, rely=0.1, relwidth=0.7, relheight=0.65)
 
 controlsDiv = tk.Frame(videoFrame, bg='gray')
 controlsDiv.place(relheight=0.1, relwidth=1, rely=0.9, relx=0)
@@ -66,13 +79,13 @@ playButton.pack(side='left')
 
 #Chat parent
 chatBox = tk.Frame(root, bg='#d9d9d9')
-chatBox.place(relx=0.8, rely=0.1, relwidth=0.2, relheight=0.6)
+chatBox.place(relx=0.8, rely=0.1, relwidth=0.2, relheight=0.8)
 
-chatHistory = tk.Label(chatBox, bg='#d9d9d9', font='40')
-chatHistory.place(relwidth=1, relheight=0.95)
+chatHistory = tk.Label(chatBox, bg='#d9d9d9', font='40',bd='100')
+chatHistory.place(relwidth=1, relheight=.9,rely=.02)
 
 messageDiv = tk.Frame(chatBox, bg='gray')
-messageDiv.place(relwidth=1, relheight=0.05, relx=0, rely=0.95)
+messageDiv.place(relwidth=2, relheight=0.05, relx=0, rely=0.95)
 
 textEntry = tk.Entry(messageDiv, bg='white')
 textEntry.pack(side='left')
@@ -81,33 +94,33 @@ sendMessage.pack(side='left')
 
 #Command parent
 commandBox = tk.Frame(root, bg='#bfbfbf')
-commandBox.place(relx=0.1, rely=0.6, relwidth=0.45, relheight=0.3)
+commandBox.place(relx=0.05, rely=0.8, relwidth=0.7, relheight=0.1)
 
 #GUI
-#window = tk.Tk()
+##window = tk.Tk()
 #window.title("EE-551 Project")
 #window.geometry('300x300')
 
-#label_target_ip = tk.Label(window, text="Target IP:")
-#label_target_ip.pack()
+label_target_ip = tk.Label(commandBox, text="Target IP:")
+label_target_ip.pack()
 
-'''text_target_ip = tk.Text(window, height=1)
+text_target_ip = tk.Text(commandBox, height=1)
 text_target_ip.pack()
 
-btn_listen = tk.Button(window, text="Start Listening",width=50, command=start_listening)
+btn_listen = tk.Button(commandBox, text="Start Listening",width=50, command=start_listening)
 btn_listen.pack(anchor=tk.CENTER, expand=True)
 
-btn_camera = tk.Button(window, text="Start Camera Stream",width=50, command=start_camera_stream)
+btn_camera = tk.Button(commandBox, text="Start Camera Stream",width=50, command=start_camera_stream)
 btn_camera.pack(anchor=tk.CENTER, expand=True)
 
-btn_screen = tk.Button(window, text="Start Screen Sharing",width=50, command=start_screen_sharing)
+btn_screen = tk.Button(commandBox, text="Start Screen Sharing",width=50, command=start_screen_sharing)
 btn_screen.pack(anchor=tk.CENTER, expand=True)
 
-btn_audio = tk.Button(window, text="Start Audio Stream",width=50, command=start_audio_stream)
+btn_audio = tk.Button(commandBox, text="Start Audio Stream",width=50, command=start_audio_stream)
 btn_audio.pack(anchor=tk.CENTER, expand=True)
 
-btn_text = tk.Button(window, text="Start Text Stream",width=50, command=start_text_message)
-btn_text.pack(anchor=tk.CENTER, expand=True)'''
+btn_text = tk.Button(commandBox, text="Start Text Stream",width=50, command=start_text_message)
+btn_text.pack(anchor=tk.CENTER, expand=True)
 
 root.mainloop()
 

@@ -62,7 +62,7 @@ def start_text_message():
     write_thread = threading.Thread(target=write)
     write_thread.start()
 
-
+'''
 # GUI
 window = tk.Tk()
 window.title("EE-551 Project")
@@ -89,4 +89,4 @@ btn_audio.pack(anchor=tk.CENTER, expand=True)
 btn_text = tk.Button(window, text="Start Text Stream",width=50, command=start_text_message)
 btn_text.pack(anchor=tk.CENTER, expand=True)
 
-window.mainloop()
+window.mainloop()'''
