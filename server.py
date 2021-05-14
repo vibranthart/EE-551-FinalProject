@@ -3,7 +3,7 @@ import socket
 
 
 # local host
-host = '127.0.0.1' 
+host = '10.0.0.46' 
 port = 14089
 
 #starts a server
