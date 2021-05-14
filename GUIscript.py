@@ -1,10 +1,11 @@
 from vidstream import AudioSender, AudioReceiver, ScreenShareClient, CameraClient, StreamingServer
 import tkinter as tk
+import os
 import socket
 import threading
 import requests
 
-from main2 import *
+from main import *
 
 # Requires pip install requests and pip install Pillow (Pillow should already be installed for the vidReceiver and vidSender)
 #The GUI operates similar to div's in JS, order determines parents and child. (root is base window, any other child can be defined
@@ -67,6 +68,9 @@ canvas.pack()
 videoFrame = tk.Frame(root, bg='#a6a6a6')
 videoFrame.place(relx=0.05, rely=0.1, relwidth=0.7, relheight=0.65)
 
+lb = tk.Listbox(videoFrame)
+lb.pack()
+
 controlsDiv = tk.Frame(videoFrame, bg='gray')
 controlsDiv.place(relheight=0.1, relwidth=1, rely=0.9, relx=0)
 
@@ -76,6 +80,25 @@ pauseButton.pack(side='left')
 playButton = tk.Button(controlsDiv, text='PLAY',
                        bg='green', command=lambda: playHandler())
 playButton.pack(side='left')
+
+def ffplay(event):
+    if lb.curselection():
+        file = lb.curselection()[0]
+        os.startfile(lb.get(file))
+    for file in os.listdir():
+        if file.endswidth(".mp4"):
+            lb.insert(0, file)
+
+bstart = tk.Button(controlsDiv, text='Start Movie', font="15")
+bstart.pack(side='left')
+bstart.bind("<ButtonPress>", ffplay)
+
+def top():
+    videoFrame.destroy()
+
+bstop = tk.Button(controlsDiv, text="Close", font="15")
+bstop.pack(side="left")
+
 
 #Chat parent
 chatBox = tk.Frame(root, bg='#d9d9d9')
