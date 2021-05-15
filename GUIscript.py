@@ -4,6 +4,10 @@ import os
 import socket
 import threading
 import requests
+from linking import *
+import time
+import platform
+import vlc
 
 from main import *
 
@@ -14,7 +18,7 @@ HEIGHT = 720
 WIDTH = 1280
 global user_message
 chat_history = "\n"
-
+c = 0
 def chatHandler(message="init", outside_msg ="init"):
     global chat_history
     if (message=="init") and (outside_msg!= "init"):
@@ -38,13 +42,22 @@ def messageHandler(text):
 
 
 def pauseHandler():
-    #ADD call to pause video playback
-    print("PAUSE CLICKED")
+    global c
+    c +=1
+    if (c % 2 == 0):
+        print("Content Resumed")
+        startVideo()
+    elif (c % 2 != 0):
+        print("PAUSE CLICKED")
+        pauseVideo()
+    
 
-
-def playHandler():
+def playHandler(url):
     #ADD call to play video playback
+    print(url)
+    MediaLink(url)
     print("PLAY CLICKED")
+    startVideo()
 
 ''' 
 GUI
@@ -68,36 +81,20 @@ canvas.pack()
 videoFrame = tk.Frame(root, bg='#a6a6a6')
 videoFrame.place(relx=0.05, rely=0.1, relwidth=0.7, relheight=0.65)
 
-lb = tk.Listbox(videoFrame)
-lb.pack()
+
 
 controlsDiv = tk.Frame(videoFrame, bg='gray')
 controlsDiv.place(relheight=0.1, relwidth=1, rely=0.9, relx=0)
+
+url_entry = tk.Entry(controlsDiv)
+url_entry.pack(side="left")
 
 pauseButton = tk.Button(controlsDiv, text='PAUSE',
                         bg='blue', command=lambda: pauseHandler())
 pauseButton.pack(side='left')
 playButton = tk.Button(controlsDiv, text='PLAY',
-                       bg='green', command=lambda: playHandler())
+                       bg='green', command=lambda: playHandler(url_entry.get()))
 playButton.pack(side='left')
-
-def ffplay(event):
-    if lb.curselection():
-        file = lb.curselection()[0]
-        os.startfile(lb.get(file))
-    for file in os.listdir():
-        if file.endswidth(".mp4"):
-            lb.insert(0, file)
-
-bstart = tk.Button(controlsDiv, text='Start Movie', font="15")
-bstart.pack(side='left')
-bstart.bind("<ButtonPress>", ffplay)
-
-def top():
-    videoFrame.destroy()
-
-bstop = tk.Button(controlsDiv, text="Close", font="15")
-bstop.pack(side="left")
 
 
 #Chat parent
