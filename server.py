@@ -61,7 +61,7 @@ def handle(client):
 def recieve():
     while True:
         client, address = server.accept()
-        print(f"Connectedd with {str(address)}")
+        print(f"Connected with {str(address)}")
 
         #send message to client
         client.send('HART'.encode('ascii'))

@@ -1,4 +1,5 @@
 from vidstream import AudioSender, AudioReceiver, ScreenShareClient, CameraClient, StreamingServer
+from tkinter import scrolledtext
 import tkinter as tk
 import os
 import socket
@@ -8,7 +9,7 @@ from linking import *
 import time
 import platform
 import vlc
-
+from tkinter.constants import *
 from main import *
 
 # Requires pip install requests and pip install Pillow (Pillow should already be installed for the vidReceiver and vidSender)
@@ -16,29 +17,35 @@ from main import *
 #  such as videoFrame is a child of root and controlsDiv is a child of videoFrame)
 HEIGHT = 720
 WIDTH = 1280
-global user_message
 chat_history = "\n"
 c = 0
-def chatHandler(message="init", outside_msg ="init"):
+def chatHandler(msg1="init", outside_msg ="init"):
     global chat_history
-    if (message=="init") and (outside_msg!= "init"):
+    message = msg1
+    if "" in message or " " in message or "   " in message:
+        message = "init"
+    else:
+        pass
+
+    if (message=="init") and (outside_msg != "init"):
         chat_history += ("other: " + outside_msg + "\n")
-        chatHistory['text'] = str(chat_history)
+        chatHistoryNEW.insert(INSERT, "%s" % chat_history)
+        #chatHistory['text'] = str(chat_history)
     elif (message!="init") and (outside_msg== "init"):
         chat_history += ("u1: " + message + "\n")
-        chatHistory['text'] = str(chat_history)
-    elif ():
-        chat_history += ("u1: " + message + "\n")
-        chatHistory['text'] = str(chat_history)
-        chat_history += ("other: " + outside_msg + "\n")
+        chatHistoryNEW.insert(INSERT, )
+        #chatHistory['text'] = str(chat_history)
+    elif (message !="init") and (outside_msg != "init"):
+        print("Invalid text")
+    
+        
+        
     
     
 
 def messageHandler(text):
-    #HART, we can chat using this variable
-    user_message = text
-    chatHandler(user_message)
-    print(user_message)
+    chatHandler(text)
+    print(text)
 
 
 def pauseHandler():
@@ -59,11 +66,6 @@ def playHandler(url):
     print("PLAY CLICKED")
     startVideo()
 
-''' 
-GUI
-
-
-'''
 
 
 root = tk.Tk()
@@ -101,8 +103,17 @@ playButton.pack(side='left')
 chatBox = tk.Frame(root, bg='#d9d9d9')
 chatBox.place(relx=0.8, rely=0.1, relwidth=0.2, relheight=0.8)
 
-chatHistory = tk.Label(chatBox, bg='#d9d9d9', font='40',bd='100')
-chatHistory.place(relwidth=1, relheight=.9,rely=.02)
+#chatHistory = tk.Label(chatBox, bg='#d9d9d9', font='40',bd='100')
+#chatHistory.place(relwidth=1, relheight=.9,rely=.02, anchor=tk.CENTER)
+
+#TEST
+
+chatHistoryNEW = scrolledtext.ScrolledText(chatBox)
+chatHistoryNEW.pack()
+chatHistoryNEW.insert('insert', "BEGIN MESSAGE HISTORY:")
+
+chatHistoryNEW.config(state=DISABLED)
+
 
 messageDiv = tk.Frame(chatBox, bg='gray')
 messageDiv.place(relwidth=2, relheight=0.05, relx=0, rely=0.95)
@@ -120,27 +131,29 @@ commandBox.place(relx=0.05, rely=0.8, relwidth=0.7, relheight=0.1)
 ##window = tk.Tk()
 #window.title("EE-551 Project")
 #window.geometry('300x300')
+ip_target = tk.Frame(root)
+ip_target.place(rely=0.1, relx=0.05, relwidth=0.7, relheight=0.05)
 
-label_target_ip = tk.Label(commandBox, text="Target IP:")
-label_target_ip.pack()
+label_target_ip = tk.Label(ip_target, text="Target IP:")
+label_target_ip.pack(side='left')
 
-text_target_ip = tk.Text(commandBox, height=1)
-text_target_ip.pack()
+text_target_ip = tk.Text(ip_target, height=1, width=0.75)
+text_target_ip.pack(side='left')
 
-btn_listen = tk.Button(commandBox, text="Start Listening",width=50, command=start_listening)
-btn_listen.pack(anchor=tk.CENTER, expand=True)
+btn_listen = tk.Button(commandBox, text="Start Listening",width=25, command=start_listening)
+btn_listen.pack(side='left')
 
-btn_camera = tk.Button(commandBox, text="Start Camera Stream",width=50, command=start_camera_stream)
-btn_camera.pack(anchor=tk.CENTER, expand=True)
+btn_camera = tk.Button(commandBox, text="Start Camera Stream",width=25, command=start_camera_stream)
+btn_camera.pack(side='left')
 
-btn_screen = tk.Button(commandBox, text="Start Screen Sharing",width=50, command=start_screen_sharing)
-btn_screen.pack(anchor=tk.CENTER, expand=True)
+btn_screen = tk.Button(commandBox, text="Start Screen Sharing",width=25, command=start_screen_sharing)
+btn_screen.pack(side='left')
 
-btn_audio = tk.Button(commandBox, text="Start Audio Stream",width=50, command=start_audio_stream)
-btn_audio.pack(anchor=tk.CENTER, expand=True)
+btn_audio = tk.Button(commandBox, text="Start Audio Stream",width=25, command=start_audio_stream)
+btn_audio.pack(side='left')
 
-btn_text = tk.Button(commandBox, text="Start Text Stream",width=50, command=start_text_message)
-btn_text.pack(anchor=tk.CENTER, expand=True)
+btn_text = tk.Button(commandBox, text="Start Text Stream",width=25, command=start_text_message)
+btn_text.pack(side='left')
 
 root.mainloop()
 
