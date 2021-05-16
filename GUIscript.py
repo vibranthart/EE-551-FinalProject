@@ -101,28 +101,19 @@ class MainScript:
                     message = self.client.recv(4096).decode('ascii')
                     if message == 'HART':
                         self.client.send(self.nickname.encode('ascii'))
-                        inst.add_to_chat(message)
-                        #inst.chatHistoryNEW.insert('end', message)
+
                     else:
                         print(message)
+                        inst.add_to_chat(message)
                 except:
                     print("[Error]")
                     self.client.close()
                     break
 
         def write():
-            global loopKiller
-            loopKiller = 0
-            while True:
-                message = f'{self.nickname}: {msg}'
-                self.client.send(message.encode('ascii'))
-
-                if loopKiller < 0:
-                    inst.add_to_chat(message)
-                    loopKiller += 1
-                else:
-                    break
-                #inst.chatHistoryNEW.insert('end', message)
+            message = f'{self.nickname}: {msg}'
+            self.client.send(message.encode('ascii'))
+            # inst.add_to_chat(message) double response?
 
         self.recieve_thread = threading.Thread(target=recieve)
         self.recieve_thread.start()
