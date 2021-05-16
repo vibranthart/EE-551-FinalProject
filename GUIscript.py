@@ -94,17 +94,19 @@ class MainScript:
             self.t5E = threading.Thread(target=self.audio_sender.stop_stream)
             self.t5E.start()
 
-    def start_text_message(self, msg="Initialized"):
+    def start_text_message(self, msg="----"):
         def recieve():
+            global loopKiller
+            loopKiller = 0
             while True:
                 try:
                     message = self.client.recv(4096).decode('ascii')
                     if message == 'HART':
                         self.client.send(self.nickname.encode('ascii'))
-
                     else:
                         print(message)
                         inst.add_to_chat(message)
+
                 except:
                     print("[Error]")
                     self.client.close()
@@ -135,11 +137,12 @@ class GuiScript:
         self.chat_history = "\n"
         self.canvas = tk.Canvas(master, height=HEIGHT, width=WIDTH)
         self.canvas.pack()
+
         #self.var = tk.StringVar('')
         # Video Parent myFrame Parent
         self.videoFrame = tk.Frame(master, bg='#a6a6a6')
-        self.videoFrame.place(relx=0.05, rely=0.1,
-                              relwidth=0.7, relheight=0.65)
+        self.videoFrame.place(relx=0.04, rely=0.1,
+                              relwidth=0.6, relheight=0.65)
 
         self.controlsDiv = tk.Frame(self.videoFrame, bg='gray')
         self.controlsDiv.place(relheight=0.1, relwidth=1, rely=0.9, relx=0)
@@ -156,11 +159,20 @@ class GuiScript:
 
         # Chat parent
         self.chatBox = tk.Frame(master, bg='#d9d9d9')
-        self.chatBox.place(relx=0.8, rely=0.1, relwidth=0.2, relheight=0.8)
+        self.chatBox.place(relx=0.65, rely=0.1, relwidth=0.35, relheight=0.8)
 
-        self.chatHistory = tk.Label(self.chatBox, font='40')
+        self.dynamicLabel = tk.Scrollbar(self.chatBox, jump=1, )
+        self.dynamicLabel.pack(side='right')
+        """
+        self.chatHistory = tk.Label(
+            self.dynamicLabel, font='40', wraplength=0)
         self.chatHistory.place(relwidth=1, relheight=.9, rely=.01)
+        """
+        self.ChatHistory = tk.Text(
+            self.chatBox, wrap=tk.WORD, width=15, state=tk.NORMAL)
+        self.ChatHistory.pack(side='left', fill=tk.BOTH)
 
+        self.ChatHistory['yscroll'] = self.dynamicLabel.set
         """
                 # TEST
 
@@ -170,6 +182,7 @@ class GuiScript:
 
                 self.chatHistoryNEW.config(state=DISABLED)
         """
+
         self.messageDiv = tk.Frame(self.chatBox, bg='gray')
         self.messageDiv.place(relwidth=2, relheight=0.05, relx=0, rely=0.95)
 
@@ -181,39 +194,39 @@ class GuiScript:
 
         # Command parent
         self.commandBox = tk.Frame(master, bg='#bfbfbf')
-        self.commandBox.place(relx=0.05, rely=0.8, relwidth=0.7, relheight=0.1)
+        self.commandBox.place(relx=0.04, rely=0.8, relwidth=0.6, relheight=0.1)
 
         # GUI
         ##window = tk.Tk()
         #window.title("EE-551 Project")
         # window.geometry('300x300')
         self.ip_target = tk.Frame(master)
-        self.ip_target.place(rely=0.1, relx=0.05, relwidth=0.7, relheight=0.05)
+        self.ip_target.place(rely=0.1, relx=0.04, relwidth=0.6, relheight=0.05)
 
         self.label_target_ip = tk.Label(self.ip_target, text="Target IP:")
         self.label_target_ip.pack(side='left')
 
-        self.text_target_ip = tk.Text(self.ip_target, height=1, width=100)
+        self.text_target_ip = tk.Text(self.ip_target, height=1, width=90)
         self.text_target_ip.pack(side='left')
 
         self.btn_listen = tk.Button(self.commandBox, text="Start Listening",
-                                    width=25, command=lambda: m.start_listening)
+                                    width=20, command=lambda: m.start_listening)
         self.btn_listen.pack(side='left')
 
         self.btn_camera = tk.Button(self.commandBox, text="Start Camera Stream",
-                                    width=25, command=lambda: m.start_camera_stream)
+                                    width=20, command=lambda: m.start_camera_stream)
         self.btn_camera.pack(side='left')
 
         self.btn_screen = tk.Button(self.commandBox, text="Start Screen Sharing",
-                                    width=25, command=lambda: m.start_screen_sharing)
+                                    width=20, command=lambda: m.start_screen_sharing)
         self.btn_screen.pack(side='left')
 
         self.btn_audio = tk.Button(self.commandBox, text="Start Audio Stream",
-                                   width=25, command=lambda: m.start_audio_stream)
+                                   width=20, command=lambda: m.start_audio_stream)
         self.btn_audio.pack(side='left')
 
-        self.btn_text = tk.Button(self.commandBox, text="Start Text Stream",
-                                  width=25, command=lambda: m.start_text_message())
+        self.btn_text = tk.Button(self.messageDiv, text="Start Text Stream",
+                                  width=20, command=lambda: m.start_text_message())
         self.btn_text.pack(side='left')
 
     def messageHandler(self, text):
@@ -237,8 +250,10 @@ class GuiScript:
         startVideo()
 
     def add_to_chat(self, annc):
+        self.chat_history = '\n'
         self.chat_history = self.chat_history + '\n' + annc + '\n'
-        self.chatHistory['text'] = self.chat_history
+        self.ChatHistory.insert(tk.INSERT, self.chat_history)
+        #self.chatHistory['text'] = self.chat_history
         #inst.chatHistoryNEW.insert('end', "%s" % chat_history)
     """
     Need image in this directory!
