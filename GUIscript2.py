@@ -24,13 +24,14 @@ class MainScript:
 
     def __init__(self):
         # initializations
+
         self.nickname = input("choose a nickname: ")
         self.local_ip_address = socket.gethostbyname(socket.gethostname())
         # public_ip_address = requests.get('https//api.ipify.org').text
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((host, 14089))
-        self.server = StreamingServer(self.local_ip_address, 9999)
-        self.receiver = AudioReceiver(self.local_ip_address, 8888)
+        self.server = StreamingServer(self.local_ip_address, 7777)
+        self.receiver = AudioReceiver(self.local_ip_address, 5555)
 
     def start_listening(self):
         self.t1 = threading.Thread(target=self.server.start_server)
@@ -46,26 +47,26 @@ class MainScript:
 
     def start_camera_stream(self):
         self.camera_client = CameraClient(
-            inst.text_target_ip.get(1.0, 'end-1c'), 7777)
+            inst.text_target_ip.get(1.0, 'end-1c'), 9999)
         self.t3 = threading.Thread(target=self.camera_client.start_stream)
         self.t3.start()
 
     def end_camera_stream(self):
         self.camera_client = CameraClient(
-            inst.text_target_ip.get(1.0, 'end-1c'), 7777)
+            inst.text_target_ip.get(1.0, 'end-1c'), 9999)
         self.t3 = threading.Thread(target=self.camera_client.stop_stream)
         self.t3.start()
 
     def start_screen_sharing(self):
         self.screen_client = ScreenShareClient(
-            inst.text_target_ip.get(1.0, 'end-1c'), 7777)
+            inst.text_target_ip.get(1.0, 'end-1c'), 9999)
         self.t4 = threading.Thread(target=self.screen_client.start_stream)
         self.t4.start()
 
     def end_screen_sharing(self):
         # end screen sharing
         self.screen_client = ScreenShareClient(
-            inst.text_target_ip.get(1.0, 'end-1c'), 7777)
+            inst.text_target_ip.get(1.0, 'end-1c'), 9999)
         self.t4E = threading.Thread(target=self.screen_client.stop_stream)
         self.t4E.start()
 
@@ -74,14 +75,14 @@ class MainScript:
         audio_count += 1
 
         self.audio_sender = AudioSender(
-            inst.text_target_ip.get(1.0, 'end-1c'), 5555)
+            inst.text_target_ip.get(1.0, 'end-1c'), 8888)
         self.t5 = threading.Thread(target=self.audio_sender.start_stream)
         self.t5.start()
 
     def end_audio_stream(self):
         # end audio stream
         self.audio_sender = AudioSender(
-            inst.text_target_ip.get(1.0, 'end-1c'), 5555)
+            inst.text_target_ip.get(1.0, 'end-1c'), 8888)
         self.t5E = threading.Thread(target=self.audio_sender.stop_stream)
         self.t5E.start()
 

@@ -3,8 +3,8 @@ import socket
 
 
 # local host
-#host = '10.0.0.46'
-host = '192.168.1.24'
+host = '10.0.0.46'
+#host = '192.168.1.24'
 port = 14089
 
 # starts a server
